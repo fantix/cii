@@ -16,9 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install EdgeDB
+      - name: Setup EdgeDB
         uses: edgedb/setup-edgedb@v1
 
-      - name: Setup Edgedb
-        run: |
-          edgedb project init --non-interactive
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - run: pip install poetry
+      - run: poetry install
+      - run: poetry run pytest -v
